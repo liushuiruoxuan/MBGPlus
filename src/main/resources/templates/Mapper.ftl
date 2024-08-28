@@ -1,17 +1,7 @@
 package ${package.Mapper};
+import org.springframework.stereotype.Repository;
 
-import ${package.Entity}.${entity};
-import com.kun.common.database.mapper.CoreMapper;
-import org.apache.ibatis.annotations.Mapper;
-
-/**
-* ${table.comment!}${table.name}表持久层接口
-*
-* @author ${author}
-* @since ${date}
-*/
-@Mapper
-public interface ${table.mapperName} extends CoreMapper<${entity}> {
+@Repository
+public interface ${entity}Mapper {
 
 }
-

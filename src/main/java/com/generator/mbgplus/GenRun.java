@@ -1,5 +1,7 @@
 package com.generator.mbgplus;
+
 import cn.hutool.core.io.IoUtil;
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
@@ -9,6 +11,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -65,44 +70,51 @@ public class GenRun {
         // 需要生成的表
         String tables = properties.getProperty("tables");
         // 代码生成后是否打开磁盘目录
-//        String openDir = properties.getProperty("openDir");
-
+        System.out.println(packagePath);
+        System.out.println(moduleName);
         // 全局配置
         GlobalConfig globalConfig = new GlobalConfig
                 .Builder()
                 .outputDir(projectPath + "/" + moduleName + "/src/main/java")
                 .author(author)
-//                .openDir("true".equals(openDir))
+                .disableOpenDir()
                 .commentDate("yyyy-MM-dd HH:mm:ss")
                 .build();
-
+        String templatePath = "/src/main/resources/mapper";
+        Map<OutputFile,String> pathInfo = new HashMap<>();
+        pathInfo.put(OutputFile.mapperXml,projectPath + "/" + moduleName + templatePath);
         // 包配置
         PackageConfig packageConfig = new PackageConfig
                 .Builder()
                 .parent(packagePath)
-//                .moduleName(moduleName)
-                .controller("")
+                .moduleName(moduleName)
+                .controller("controller")
                 .entity("entity.po")
-                .mapper("mapper")
                 .service("service")
                 .serviceImpl("service.impl")
-                .moduleName(null)
+                .mapper("mapper")
+                .xml(null)
+                .pathInfo(pathInfo)
                 .build();
 
         // 配置模板
         String absolutePath = File.separator + "templates";
         String mapperTempPath = absolutePath + File.separator + "Mapper";
+        String mapperTempXmlPath = absolutePath + File.separator + "MapperXml";
         String entityTempPath = absolutePath + File.separator + "Entity";
         String serviceTempPath = absolutePath + File.separator + "Service";
         String serviceImplTempPath = absolutePath + File.separator + "ServiceImpl";
+        String controllerTempPath = absolutePath + File.separator + "Controller";
+        System.out.println(absolutePath);
+        System.out.println(File.separator);
         TemplateConfig templateConfig = new TemplateConfig
                 .Builder()
                 .mapper(mapperTempPath)
                 .service(serviceTempPath)
                 .serviceImpl(serviceImplTempPath)
                 .entity(entityTempPath)
-                .mapperXml(null)
-                .controller(null)
+                .mapperXml(mapperTempXmlPath)
+                .controller(controllerTempPath)
                 .build();
 
         // 策略配置
