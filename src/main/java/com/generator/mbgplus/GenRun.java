@@ -80,31 +80,49 @@ public class GenRun {
                 .disableOpenDir()
                 .commentDate("yyyy-MM-dd HH:mm:ss")
                 .build();
-        String templatePath = "/src/main/resources/mapper";
+
+        String templateXmlPath =  "/src/main/resources/mapper";
+        String templateResponsePath = "/src/main/java/controller/response";
+        String templateRequestPath = "/src/main/java/controller/request";
+        String templateDtoPath = "/src/main/java/entity/dto";
+        String templateTransformPath = "/src/main/java/controller/transform";
+        String controllerPath = "/src/main/java/controller";
+        String entityPath = "/src/main/java/entity/po";
+        String servicePath = "/src/main/java/service";
+        String serviceImplPath = "/src/main/java/service/impl";
+        String mapperPath = "/src/main/java/mapper";
         Map<OutputFile,String> pathInfo = new HashMap<>();
-        pathInfo.put(OutputFile.mapperXml,projectPath + "/" + moduleName + templatePath);
+        pathInfo.put(OutputFile.xml,projectPath + "/" + moduleName + templateXmlPath);
+        pathInfo.put(OutputFile.controller,projectPath + "/" + moduleName + controllerPath);
+        pathInfo.put(OutputFile.entity,projectPath + "/" + moduleName + entityPath);
+        pathInfo.put(OutputFile.service,projectPath + "/" + moduleName + servicePath);
+        pathInfo.put(OutputFile.serviceImpl,projectPath + "/" + moduleName + serviceImplPath);
+        pathInfo.put(OutputFile.mapper,projectPath + "/" + moduleName + mapperPath);
+        pathInfo.put(OutputFile.other,projectPath + "/" + moduleName + templateResponsePath);
+        pathInfo.put(OutputFile.other,projectPath + "/" + moduleName + templateDtoPath);
+        pathInfo.put(OutputFile.other,projectPath + "/" + moduleName + templateRequestPath);
+        pathInfo.put(OutputFile.other,projectPath + "/" + moduleName + templateTransformPath);
         // 包配置
         PackageConfig packageConfig = new PackageConfig
                 .Builder()
                 .parent(packagePath)
                 .moduleName(moduleName)
-                .controller("controller")
-                .entity("entity.po")
-                .service("service")
-                .serviceImpl("service.impl")
-                .mapper("mapper")
-                .xml(null)
                 .pathInfo(pathInfo)
                 .build();
 
+
         // 配置模板
         String absolutePath = File.separator + "templates";
-        String mapperTempPath = absolutePath + File.separator + "Mapper";
-        String mapperTempXmlPath = absolutePath + File.separator + "MapperXml";
-        String entityTempPath = absolutePath + File.separator + "Entity";
-        String serviceTempPath = absolutePath + File.separator + "Service";
-        String serviceImplTempPath = absolutePath + File.separator + "ServiceImpl";
-        String controllerTempPath = absolutePath + File.separator + "Controller";
+        String mapperTempPath = absolutePath + File.separator + "/mapper/mapper";
+        String mapperTempXmlPath = absolutePath + File.separator + "/mapper/mapperxml";
+        String entityTempPath = absolutePath + File.separator + "/entity/entity";
+        String serviceTempPath = absolutePath + File.separator + "/service/service";
+        String serviceImplTempPath = absolutePath + File.separator + "/service/serviceimpl/serviceimpl";
+        String controllerTempPath = absolutePath + File.separator + "/controller/controller";
+        String dtoTempPath = absolutePath + File.separator + "/service/dto/dto";
+        String requestTempPath = absolutePath + File.separator + "/controller/request";
+        String responseTempPath = absolutePath + File.separator + "/controller/response";
+        String transformTempPath = absolutePath + File.separator + "/controller/transform";
         System.out.println(absolutePath);
         System.out.println(File.separator);
         TemplateConfig templateConfig = new TemplateConfig
@@ -113,8 +131,12 @@ public class GenRun {
                 .service(serviceTempPath)
                 .serviceImpl(serviceImplTempPath)
                 .entity(entityTempPath)
-                .mapperXml(mapperTempXmlPath)
+                .xml(mapperTempXmlPath)
                 .controller(controllerTempPath)
+                .entity(responseTempPath)
+                .entity(requestTempPath)
+                .entity(dtoTempPath)
+                .entity(transformTempPath)
                 .build();
 
         // 策略配置
