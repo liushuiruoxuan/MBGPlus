@@ -1,76 +1,69 @@
 package com.generator.mbgplus.model.entity;
 
+    import com.baomidou.mybatisplus.annotation.IdType;
+    import com.baomidou.mybatisplus.annotation.TableId;
+    import com.baomidou.mybatisplus.annotation.TableName;
+    import java.io.Serializable;
+    import java.time.LocalDateTime;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-        import java.time.LocalDateTime;
-
 /**
-* 3号楼空调设备
+* <p>
+    * 3号楼空调设备
+    * </p>
 *
 * @author chai
-* @since 2024-08-29
+* @since 2024-09-04
 */
 @Data
-public class TenementDevice {
+@ApiModel(value = "TenementDevice对象", description = "3号楼空调设备")
+public class TenementDevice implements Serializable {
 
-    /**
-    * 自增主键
-    */
+
+    @ApiModelProperty("自增主键")
     private Integer id;
-    /**
-    * 楼宇
-    */
+
+    @ApiModelProperty("楼宇")
     private Integer tenement;
-    /**
-    * 所属楼层
-    */
+
+    @ApiModelProperty("所属楼层")
     private String floor;
-    /**
-    * 区域
-    */
+
+    @ApiModelProperty("区域")
     private String region;
-    /**
-    * 设备编号
-    */
+
+    @ApiModelProperty("设备编号")
     private String deviceId;
-    /**
-    * 设备类型 1温控器WKQ 2风机盘管FJPG
-    */
+
+    @ApiModelProperty("设备类型 1温控器WKQ 2风机盘管FJPG")
     private Byte deviceType;
-    /**
-    * 设备位置
-    */
+
+    @ApiModelProperty("设备位置")
     private String deviceAddress;
-    /**
-    * 发送指令字段
-    */
+
+    @ApiModelProperty("发送指令字段")
     private String cpnName;
-    /**
-    * 备注
-    */
+
+    @ApiModelProperty("备注")
     private String remark;
-    /**
-    * 坐标
-    */
+
+    @ApiModelProperty("坐标")
     private String devicePositions;
-    /**
-    * x
-    */
+
+    @ApiModelProperty("x")
     private Integer x;
-    /**
-    * y
-    */
+
+    @ApiModelProperty("y")
     private Integer y;
-    /**
-    * 有效标识，1：有效；0：无效
-    */
+
+    @ApiModelProperty("有效标识，1：有效；0：无效")
     private Byte isDel;
-    /**
-    * 创建时间
-    */
+
+    @ApiModelProperty("创建时间")
     private LocalDateTime createTime;
-    /**
-    * 修改时间
-    */
+
+    @ApiModelProperty("修改时间")
     private LocalDateTime updateTime;
 }

@@ -6,10 +6,8 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.generator.mbgplus.common.EnhanceFreemarkerTemplateEngine;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.sql.Types;
 import java.util.HashMap;
@@ -105,12 +103,12 @@ public class NewGenRun {
 
                 })
                 .strategyConfig(builder -> {
-                            String entity = "/templates/model/entity/entity";
-                            String mapper = "/templates/mapper/mapper";
-                            String mapperXml = "/templates/mapper/mapperxml";
-                            String service = "/templates/service/service";
-                            String serviceImpl = "/templates/service/serviceImpl/serviceimpl";
-                            String controller = "/templates/controller/controller";
+                            String entity = "/templates/model/entity/entity.java";
+                            String mapper = "/templates/mapper/mapper.java";
+                            String mapperXml = "/templates/mapper/mapper.xml";
+                            String service = "/templates/service/service.java";
+                            String serviceImpl = "/templates/service/serviceImpl/serviceImpl.java";
+                            String controller = "/templates/controller/controller.java";
                             builder.addInclude(tables) // 设置需要生成的表名
                                     .addTablePrefix(tablePrefix) // 设置过滤表前缀
                                     .entityBuilder().javaTemplate(entity).enableLombok()
@@ -123,7 +121,7 @@ public class NewGenRun {
                 ).injectionConfig(builder -> {
                     Map<String, String> customFile = new HashMap<>();
                     // DTO
-                    customFile.put("DTO.java", "/templates/model/dto/dto.ftl");
+                    customFile.put("DTO.java", "/templates/model/dto/dto.java.ftl");
                     builder.customFile(customFile);
                     System.out.println();
                 })

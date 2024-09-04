@@ -2,19 +2,18 @@ package com.generator.mbgplus.service.impl;
 
 import com.generator.mbgplus.model.entity.TenementDevice;
 import com.generator.mbgplus.mapper.TenementDeviceMapper;
-import com.generator.mbgplus.service.ITenementDeviceService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+    import com.generator.mbgplus.service.ITenementDeviceService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.stereotype.Service;
 
 /**
+* <p>
+    * 3号楼空调设备 服务实现类
+    * </p>
+*
 * @author chai
-* @since 2024-08-29
+* @since 2024-09-04
 */
-@Slf4j
 @Service
-@RequiredArgsConstructor
-public class TenementDeviceServiceImpl implements ITenementDeviceService {
-
-
+public class TenementDeviceServiceImpl implements ITenementDeviceService{
 }
-

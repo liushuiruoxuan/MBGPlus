@@ -3,12 +3,13 @@ package ${package.Service};
 import ${package.Entity}.${entity};
 
 /**
-* ${table.comment!}业务接口
+* <p>
+    * ${table.comment!} 服务类
+    * </p>
 *
 * @author ${author}
 * @since ${date}
 */
-public interface I${entity}Service {
+public interface ${table.serviceName}  {
 
 }
-
