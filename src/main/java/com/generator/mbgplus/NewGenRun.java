@@ -77,6 +77,7 @@ public class NewGenRun {
                     builder.author(author) // 设置作者
                             .enableSwagger() // 开启 swagger 模式
                             .outputDir(javaPath) // 指定输出目录
+                            .disableOpenDir()
                     ;
                 })
                 .dataSourceConfig(builder ->

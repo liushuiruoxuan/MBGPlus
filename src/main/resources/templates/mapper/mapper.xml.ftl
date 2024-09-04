@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="${package.Mapper}.${table.mapperName}">
     <!-- 开启二级缓存 -->
-<#--    <cache type="${cacheClassName}"/>-->
+    <#--    <cache type="${cacheClassName}"/>-->
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="${package.Entity}.${entity}">
         <#list table.fields as field>
@@ -27,4 +27,14 @@
         </#list>
         ${table.fieldNames}
     </sql>
+<#--    <select id="get${entity}List" parameterType="${package.Entity}.${entity}" resultMap="BaseResultMap">-->
+<#--        select-->
+<#--        <include refid="Base_Column_List"/>-->
+<#--        from ${table.name}-->
+<#--        <where>-->
+<#--            <#list table.fields as field>-->
+<#--                ${field.name} = "#{"+ ${field.propertyName} +"}"-->
+<#--            </#list>-->
+<#--        </where>-->
+<#--    </select>-->
 </mapper>
