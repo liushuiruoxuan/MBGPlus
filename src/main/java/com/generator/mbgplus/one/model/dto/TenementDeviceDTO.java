@@ -1,4 +1,4 @@
-package com.generator.mbgplus.model.entity;
+package com.generator.mbgplus.one.model.entity;
 
     import com.baomidou.mybatisplus.annotation.IdType;
     import com.baomidou.mybatisplus.annotation.TableId;

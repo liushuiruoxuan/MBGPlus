@@ -1,6 +1,6 @@
-package com.generator.mbgplus.mapper;
+package com.generator.mbgplus.one.mapper;
 
-import com.generator.mbgplus.model.entity.TenementDevice;
+import com.generator.mbgplus.one.model.entity.TenementDevice;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

@@ -1,6 +1,6 @@
-package com.generator.mbgplus.service;
+package com.generator.mbgplus.one.service;
 
-import com.generator.mbgplus.model.entity.TenementDevice;
+import com.generator.mbgplus.one.model.entity.TenementDevice;
 
 /**
 * <p>

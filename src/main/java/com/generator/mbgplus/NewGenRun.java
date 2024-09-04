@@ -1,6 +1,7 @@
 package com.generator.mbgplus;
 
 import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
@@ -60,23 +61,22 @@ public class NewGenRun {
         String projectPath = properties.getProperty("projectPath");
         String javaPath = projectPath + moduleName + "/src/main/java/";
         String resourcesPath = projectPath + moduleName + "/src/main/resources/";
+        String mapperPath = properties.getProperty("mapperPath");
         // 作者名称
         String author = properties.getProperty("author");
         // 基础包路径
         String packagePath = properties.getProperty("packagePath");
+        String replacePackagePath = packagePath.replace(StrUtil.DOT, StrUtil.SLASH);
         // 需要生成的表
         String tables = properties.getProperty("tables");
         String tablePrefix = properties.getProperty("tablePrefix");
         // 代码生成后是否打开磁盘目录
-        System.out.println(packagePath);
-        System.out.println(moduleName);
         // 全局配置
         FastAutoGenerator.create(url, username, password)
                 .globalConfig(builder -> {
                     builder.author(author) // 设置作者
                             .enableSwagger() // 开启 swagger 模式
                             .outputDir(javaPath) // 指定输出目录
-                            .disableOpenDir()
                     ;
                 })
                 .dataSourceConfig(builder ->
@@ -92,9 +92,9 @@ public class NewGenRun {
                 .packageConfig(builder -> {
                     Map<OutputFile, String> outputFileStringMap = new HashMap<>();
                     // 设置mapperXml生成路径
-                    outputFileStringMap.put(OutputFile.xml, resourcesPath + "/mapper");
+                    outputFileStringMap.put(OutputFile.xml, resourcesPath + mapperPath);
                     // 设置dto生成路径
-                    outputFileStringMap.put(OutputFile.other, javaPath +"com/generator/mbgplus/model/dto");
+                    outputFileStringMap.put(OutputFile.other, javaPath + replacePackagePath+"/model/dto");
                     builder.parent(packagePath) // 设置父包名
                             .moduleName(moduleName) // 设置父包模块名
                             .entity("model.entity") // 设置实体类包名

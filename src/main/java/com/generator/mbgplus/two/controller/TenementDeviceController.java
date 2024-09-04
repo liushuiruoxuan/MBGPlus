@@ -1,4 +1,4 @@
-package com.generator.mbgplus.controller;
+package com.generator.mbgplus.two.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
