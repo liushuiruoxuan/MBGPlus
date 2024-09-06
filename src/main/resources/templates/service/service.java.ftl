@@ -1,7 +1,5 @@
 package ${package.Service};
 
-import ${package.Entity}.${entity};
-
 /**
 * <p>
     * ${table.comment!} 服务类

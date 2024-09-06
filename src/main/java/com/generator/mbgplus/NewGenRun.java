@@ -4,6 +4,7 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.generator.mbgplus.common.EnhanceFreemarkerTemplateEngine;
 
@@ -77,6 +78,7 @@ public class NewGenRun {
                     builder.author(author) // 设置作者
                             .enableSwagger() // 开启 swagger 模式
                             .outputDir(javaPath) // 指定输出目录
+                            .dateType(DateType.ONLY_DATE)
                             .disableOpenDir()
                     ;
                 })
@@ -87,6 +89,7 @@ public class NewGenRun {
                                 // 自定义类型转换
                                 return DbColumnType.INTEGER;
                             }
+
                             return typeRegistry.getColumnType(metaInfo);
                         })
                 )

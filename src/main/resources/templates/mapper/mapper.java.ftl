@@ -1,10 +1,6 @@
 package ${package.Mapper};
 
 import ${package.Entity}.${entity};
-import ${superMapperClassPackage};
-<#if mapperAnnotationClass??>
-    import ${mapperAnnotationClass.name};
-</#if>
 
 /**
 * <p>
