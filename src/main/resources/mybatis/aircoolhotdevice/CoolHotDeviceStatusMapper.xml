@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.generator.mbgplus.aircoolhotdevice.mapper.CoolHotDeviceStatusMapper">
+    <!-- 开启二级缓存 -->
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.generator.mbgplus.aircoolhotdevice.model.entity.CoolHotDeviceStatus">
+                <id column="id" property="id"/>
+                <result column="building_number" property="buildingNumber"/>
+                <result column="device_id" property="deviceId"/>
+                <result column="device_type" property="deviceType"/>
+                <result column="switch_command" property="switchCommand"/>
+                <result column="run_mode" property="runMode"/>
+                <result column="cold_back_temperature" property="coldBackTemperature"/>
+                <result column="hot_back_temperature" property="hotBackTemperature"/>
+                <result column="cold_out_temperature" property="coldOutTemperature"/>
+                <result column="hot_out_temperature" property="hotOutTemperature"/>
+                <result column="switch_state" property="switchState"/>
+                <result column="run_mode_state" property="runModeState"/>
+                <result column="cold_back_temperature_data" property="coldBackTemperatureData"/>
+                <result column="hot_back_temperature_data" property="hotBackTemperatureData"/>
+                <result column="cold_out_temperature_data" property="coldOutTemperatureData"/>
+                <result column="hot_out_temperature_data" property="hotOutTemperatureData"/>
+                <result column="poll_system_back_water" property="pollSystemBackWater"/>
+                <result column="poll_system_out_water" property="pollSystemOutWater"/>
+                <result column="poll_ambient_temperature" property="pollAmbientTemperature"/>
+                <result column="load" property="load"/>
+                <result column="is_del" property="isDel"/>
+                <result column="create_time" property="createTime"/>
+                <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, building_number, device_id, device_type, switch_command, run_mode, cold_back_temperature, hot_back_temperature, cold_out_temperature, hot_out_temperature, switch_state, run_mode_state, cold_back_temperature_data, hot_back_temperature_data, cold_out_temperature_data, hot_out_temperature_data, poll_system_back_water, poll_system_out_water, poll_ambient_temperature, load, is_del, create_time, update_time
+    </sql>
+</mapper>

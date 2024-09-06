@@ -1,8 +1,7 @@
-package ${package.Entity};
-
-<#list table.importPackages as pkg>
-    import ${pkg};
-</#list>
+package ${package.Entity?replace(".entity","")}.dto;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

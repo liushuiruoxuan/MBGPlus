@@ -1,11 +1,7 @@
 package ${package.ServiceImpl};
 
-import ${package.Entity}.${entity};
-import ${package.Mapper}.${table.mapperName};
-<#if generateService>
-    import ${package.Service}.${table.serviceName};
-</#if>
-import ${superServiceImplClassPackage};
+
+import ${package.Service}.${table.serviceName};
 import org.springframework.stereotype.Service;
 
 /**
