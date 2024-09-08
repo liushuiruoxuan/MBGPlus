@@ -1,4 +1,4 @@
-package com.generator.mbgplus.common;
+package com.generator.chai.common;
 
 import lombok.Data;
 import org.springframework.http.HttpStatus;

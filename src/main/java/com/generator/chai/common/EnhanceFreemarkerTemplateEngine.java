@@ -1,4 +1,4 @@
-package com.generator.mbgplus.common;
+package com.generator.chai.common;
 
 import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
