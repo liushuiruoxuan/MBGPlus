@@ -1,4 +1,4 @@
-package com.generator;
+package com.generator.chai;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

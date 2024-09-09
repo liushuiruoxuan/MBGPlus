@@ -28,29 +28,27 @@
         ${table.fieldNames}
     </sql>
 
+    <sql id="list_where">
+        <where>
+            <#list table.fields as field>
+                <#if field.keyFlag>
+                    and ${field.name} = ${r"#{"}${field.propertyName}${r"}"}
+                </#if>
+            </#list>
+        </where>
+    </sql>
     <select id="get${entity}List" parameterType="${package.Entity}.${entity}" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from ${table.name}
-        <where>
-            <#list table.fields as field>
-                <if test="${field.propertyName} != null and ${field.propertyName} != ''">
-                    and ${field.name} = ${r"#{"}${field.propertyName}${r"}"}
-                </if>
-            </#list>
-        </where>
+        <include refid="list_where"/>
     </select>
 
     <select id="get${entity}One" parameterType="${package.Entity}.${entity}" resultMap="BaseResultMap">
         select
+        <include refid="Base_Column_List"/>
         from ${table.name}
-        <where>
-            <#list table.fields as field>
-                <if test="${field.propertyName} != null and ${field.propertyName} != ''">
-                    and ${field.name} = ${r"#{"}${field.propertyName}${r"}"}
-                </if>
-            </#list>
-        </where>
+        <include refid="list_where"/>
         limit 1
     </select>
 
@@ -79,7 +77,7 @@
         <foreach collection="list" item="item" index="index" separator=",">
             <trim prefix="(" suffix=")" suffixOverrides=",">
                 <#list table.fields as field>
-                    ${r"#{"}$item.${field.propertyName}${r"}"},
+                    ${r"#{"}item.${field.propertyName}${r"}"},
                 </#list>
             </trim>
         </foreach>
@@ -89,16 +87,20 @@
         update ${table.name}
         <set>
             <#list table.fields as field>
-                <if test="${field.propertyName} != null and ${field.propertyName} != ''">
-                    ${field.name} = ${r"#{"}${field.propertyName}${r"}"},
-                </if>
+                <#if !field.keyFlag>
+                    <if test="${field.propertyName} != null">
+                        ${field.name} = ${r"#{"}${field.propertyName}${r"}"},
+                    </if>
+                </#if>
             </#list>
         </set>
         <where>
             <#list table.fields as field>
-                    <if test="${field.propertyName} != null">
-                        and ${field.name} = ${r"#{"}${field.propertyName}${r"}"}
-                    </if>
+                <#if field.keyFlag>
+                <if test="${field.propertyName} != null">
+                    and ${field.name} = ${r"#{"}${field.propertyName}${r"}"}
+                </if>
+                </#if>
             </#list>
         </where>
     </update>
@@ -107,7 +109,9 @@
         update ${table.name}
         <set>
             <#list table.fields as field>
-                ${field.name} = ${r"#{"}${field.propertyName}${r"}"},
+                <#if !field.keyFlag>
+                    ${field.name} = ${r"#{"}${field.propertyName}${r"}"},
+                </#if>
             </#list>
         </set>
         where
@@ -126,7 +130,9 @@
             update ${table.name}
             <set>
                 <#list table.fields as field>
-                    ${field.name} = ${r"#{"}item.${field.propertyName}${r"}"},
+                    <#if !field.keyFlag>
+                        ${field.name} = ${r"#{"}item.${field.propertyName}${r"}"},
+                    </#if>
                 </#list>
             </set>
             where
@@ -143,7 +149,9 @@
         update ${table.name}
         <set>
             <#list table.fields as field>
-                ${field.name} = ${r"#{"}${field.propertyName}${r"}"},
+                <#if !field.keyFlag>
+                    ${field.name} = ${r"#{"}${field.propertyName}${r"}"},
+                </#if>
             </#list>
         </set>
         <where>
@@ -159,7 +167,9 @@
         update ${table.name}
         <set>
             <#list table.fields as field>
-                ${field.name} = ${r"#{"}${field.propertyName}${r"}"},
+                <#if !field.keyFlag>
+                    ${field.name} = ${r"#{"}${field.propertyName}${r"}"},
+                </#if>
             </#list>
         </set>
         where
