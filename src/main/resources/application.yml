@@ -1,13 +1,19 @@
 
 spring:
+  main:
+    allow-circular-references: true
   datasource:
     url: jdbc:mysql://192.168.8.11:13306/swarm_manager?autoReconnect=true&autoReconnectForPools=true&useUnicode=true&characterEncoding=UTF8&useSSL=false&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
     username: root
     password: hdtdmysqlserver2021
-
+#mybatis 分页插件
+pagehelper:
+  helperDialect: mysql
 
 mybatis-plus:
   mapper-locations: classpath*:mybatis/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 server:
   port: 8081
   servlet:
