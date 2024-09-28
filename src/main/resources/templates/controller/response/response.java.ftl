@@ -1,11 +1,14 @@
-package ${package.Entity};
+package ${package.Controller}.response;
 
-<#list table.importPackages as pkg>
-    import ${pkg};
-</#list>
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
 * <p>
@@ -16,8 +19,11 @@ import lombok.Data;
 * @since ${date}
 */
 @Data
-@ApiModel(value = "${entity}对象", description = "${table.comment!}")
-public class ${entity} implements Serializable {
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ApiModel(value = "${entity}Response对象", description = "${table.comment!}")
+public class ${entity}Response implements Serializable {
 
 <#-- ----------  BEGIN 字段循环遍历  ---------->
 <#list table.fields as field>

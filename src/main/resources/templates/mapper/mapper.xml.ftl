@@ -31,8 +31,28 @@
     <sql id="list_where">
         <where>
             <#list table.fields as field>
+                <#if field.propertyName?contains("delFlag")>
+                    del_flag = 0
+                <#elseif field.propertyType == "String">
+                    <if test="${field.propertyName} != null and ${field.propertyName} !=''">
+                        and ${field.name} = ${r"#{"}${field.propertyName}${r"}"}
+                    </if>
+
+                <#else>
+                    <if test="${field.propertyName} != null">
+                        and ${field.name} = ${r"#{"}${field.propertyName}${r"}"}
+                    </if>
+                </#if>
+            </#list>
+        </where>
+    </sql>
+    <sql id="update_where">
+        <where>
+            <#list table.fields as field>
                 <#if field.keyFlag>
-                    and ${field.name} = ${r"#{"}${field.propertyName}${r"}"}
+                    <if test="${field.propertyName} != null">
+                        and ${field.name} = ${r"#{"}${field.propertyName}${r"}"}
+                    </if>
                 </#if>
             </#list>
         </where>
@@ -94,15 +114,7 @@
                 </#if>
             </#list>
         </set>
-        <where>
-            <#list table.fields as field>
-                <#if field.keyFlag>
-                <if test="${field.propertyName} != null">
-                    and ${field.name} = ${r"#{"}${field.propertyName}${r"}"}
-                </if>
-                </#if>
-            </#list>
-        </where>
+        <include refid="update_where"/>
     </update>
 
     <update id="updateBatch${entity}Ids" parameterType="${package.Entity}.${entity}">
@@ -114,34 +126,45 @@
                 </#if>
             </#list>
         </set>
-        where
-        <#list table.fields as field>
-            <#if field.keyFlag>
-                ${field.name} in
-                <foreach collection="${field.name}s" item="item" index="index" open="(" close=")" separator=",">
-                    ${r"#{"}item.${field.propertyName}${r"}"}
-                </foreach>
-            </#if>
-        </#list>
+        <where>
+            <#list table.fields as field>
+                <#if field.keyFlag>
+                    ${field.name} in
+                    <foreach collection="${field.name}s" item="item" index="index" open="(" close=")" separator=",">
+                        ${r"#{"}item.${field.propertyName}${r"}"}
+                    </foreach>
+                </#if>
+            </#list>
+        </where>
     </update>
 
     <update id="updateBatch${entity}">
-        <foreach collection="list" item="item" index="index" open="(" close=")" separator=";">
-            update ${table.name}
-            <set>
+        update ${table.name}
+        <trim prefix="set" suffixOverrides=",">
+            <foreach collection="list" item="item" index="index" open="(" close=")" separator=";">
                 <#list table.fields as field>
-                    <#if !field.keyFlag>
-                        ${field.name} = ${r"#{"}item.${field.propertyName}${r"}"},
-                    </#if>
+                    <trim prefix="${field.name}=case" suffix="end,">
+                        <foreach collection="list" item="item" index="index">
+                            <#if  field.propertyType == "String">
+                                <if test="${r"#{"}item.${field.propertyName}${r"}"} !=null and ${r"#{"}item.${field.propertyName}${r"}"} != ''">
+                                    when id= ${r"#{"}item.id${r"}"} then ${r"#{"}item.${field.propertyName}${r"}"}
+                                </if>
+                            <#else>
+                                <if test="${r"#{"}item.${field.propertyName}${r"}"} !=null">
+                                    when id= ${r"#{"}item.id${r"}"} then ${r"#{"}item.${field.propertyName}${r"}"}
+                                </if>
+                            </#if>
+                        </foreach>
+                    </trim>
                 </#list>
-            </set>
-            where
-            <#list table.fields as field>
-                <#if field.keyFlag>
-                    ${field.name} = ${r"#{"}item.${field.propertyName}${r"}"}
-                </#if>
-            </#list>
-        </foreach>
+            </foreach>
+        </trim>
+        <where>
+            id in
+            <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+                ${r"#{"}item.id${r"}"}
+            </foreach>
+        </where>
     </update>
 
     <update id="delete${entity}" parameterType="${package.Entity}.${entity}">
@@ -154,13 +177,7 @@
                 </#if>
             </#list>
         </set>
-        <where>
-            <#list table.fields as field>
-                <#if field.keyFlag>
-                    and ${field.name} = ${r"#{"}${field.propertyName}${r"}"}
-                </#if>
-            </#list>
-        </where>
+        <include refid="update_where"/>
     </update>
 
     <update id="deleteBatch${entity}" parameterType="${package.Entity}.${entity}">
@@ -172,14 +189,15 @@
                 </#if>
             </#list>
         </set>
-        where
-        <#list table.fields as field>
-            <#if field.keyFlag>
-                ${field.name} in
-                <foreach collection="${field.name}s" item="item" index="index" open="(" close=")" separator=",">
-                    ${r"#{"}item.${field.propertyName}${r"}"}
-                </foreach>
-            </#if>
-        </#list>
+        <where>
+            <#list table.fields as field>
+                <#if field.keyFlag>
+                    ${field.name} in
+                    <foreach collection="${field.name}s" item="item" index="index" open="(" close=")" separator=",">
+                        ${r"#{"}item.${field.propertyName}${r"}"}
+                    </foreach>
+                </#if>
+            </#list>
+        </where>
     </update>
 </mapper>

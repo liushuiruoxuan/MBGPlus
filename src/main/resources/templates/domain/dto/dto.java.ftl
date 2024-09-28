@@ -4,7 +4,10 @@ import java.math.BigDecimal;
 import java.util.Date;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
 * <p>
@@ -15,6 +18,9 @@ import lombok.Data;
 * @since ${date}
 */
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @ApiModel(value = "${entity}DTO对象", description = "${table.comment!}")
 public class ${entity}DTO implements Serializable {
 

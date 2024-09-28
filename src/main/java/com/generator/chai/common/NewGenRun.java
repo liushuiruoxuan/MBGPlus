@@ -4,16 +4,16 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
+import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.sql.Types;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * 代码生成
@@ -66,12 +66,22 @@ public class NewGenRun {
         String author = properties.getProperty("author");
         // 基础包路径
         String packagePath = properties.getProperty("packagePath");
+        System.out.println(packagePath);
+        int lastIndexOf = packagePath.lastIndexOf(StrUtil.DOT);
+        String chaiPackagePath = packagePath.substring(0, lastIndexOf);
+        System.out.println(chaiPackagePath);
         String replacePackagePath = packagePath.replace(StrUtil.DOT, StrUtil.SLASH);
+        System.out.println(replacePackagePath);
+        int lastIndexOf1 = replacePackagePath.lastIndexOf(StrUtil.SLASH);
+        String replacePackagePathSub = replacePackagePath.substring(0, lastIndexOf1);
+        System.out.println(replacePackagePathSub);
+
         // 需要生成的表
         String tables = properties.getProperty("tables");
         String tablePrefix = properties.getProperty("tablePrefix");
         // 代码生成后是否打开磁盘目录
         // 全局配置
+        System.out.println("================================================="+javaPath + replacePackagePath+"/domain/dto");
         FastAutoGenerator.create(url, username, password)
                 .globalConfig(builder -> {
                     builder.author(author) // 设置作者
@@ -84,7 +94,7 @@ public class NewGenRun {
                 .dataSourceConfig(builder ->
                         builder.typeConvertHandler((globalConfig, typeRegistry, metaInfo) -> {
                             int typeCode = metaInfo.getJdbcType().TYPE_CODE;
-                            if (typeCode == Types.SMALLINT) {
+                            if (typeCode == Types.TINYINT) {
                                 // 自定义类型转换
                                 return DbColumnType.INTEGER;
                             }
@@ -97,7 +107,6 @@ public class NewGenRun {
                     // 设置mapperXml生成路径
                     outputFileStringMap.put(OutputFile.xml, resourcesPath + mapperPath);
                     // 设置dto生成路径
-                    outputFileStringMap.put(OutputFile.other, javaPath + replacePackagePath+"/domain/dto");
                     builder.parent(packagePath) // 设置父包名
                             .moduleName(moduleName) // 设置父包模块名
                             .entity("domain.entity") // 设置实体类包名
@@ -122,13 +131,20 @@ public class NewGenRun {
                         }
 
                 ).injectionConfig(builder -> {
-                    Map<String, String> customFile = new HashMap<>();
-                    // DTO
-                    customFile.put("DTO.java", "/templates/domain/dto/dto.java.ftl");
-                    builder.customFile(customFile);
-                    System.out.println();
+                    List<CustomFile> customFiles = new ArrayList<>();
+                    customFiles.add(new CustomFile.Builder().fileName("Request.java").templatePath("/templates/controller/request/request.java.ftl").filePath(javaPath + replacePackagePath+"/controller/request").enableFileOverride().build());
+                    customFiles.add(new CustomFile.Builder().fileName("Response.java").templatePath("/templates/controller/response/response.java.ftl").filePath(javaPath + replacePackagePath+"/controller/response").enableFileOverride().build());
+                    customFiles.add(new CustomFile.Builder().fileName("DTO.java").templatePath("/templates/domain/dto/dto.java.ftl").filePath(javaPath + replacePackagePath+"/domain/dto").enableFileOverride().build());
+//                    customFiles.add(new CustomFile.Builder().fileName("PageResponse.java").templatePath("/templates/common/pageresponse.java.ftl").filePath(javaPath + replacePackagePathSub+"/common/entity").enableFileOverride().build());
+//                    customFiles.add(new CustomFile.Builder().fileName("PageRequest.java").templatePath("/templates/common/pagerequest.java.ftl").filePath(javaPath + replacePackagePathSub+"/common/entity").enableFileOverride().build());
+//                    customFiles.add(new CustomFile.Builder().fileName("ResponseResult.java").templatePath("/templates/common/responseresult.java.ftl").filePath(javaPath + replacePackagePathSub+"/common/entity").enableFileOverride().build());
+//                    Map<String,Object > map = new HashMap<>();
+//                    map.put("chaiPackPath",chaiPackagePath);
+//                    builder.customMap(map);
+//                    builder.customFile(Collections.singletonMap("DTO.java", "/templates/dto.java.vm"))
+                    builder.customFile(customFiles);
                 })
-                .templateEngine(new EnhanceFreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
+                .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
                 .execute();
     }
 

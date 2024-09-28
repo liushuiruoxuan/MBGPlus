@@ -1,5 +1,7 @@
 package ${package.Service};
 import ${package.Entity}.${entity};
+import ${package.Controller}.request.${entity}Request;
+import ${package.Controller}.response.${entity}Response;
 import java.util.List;
 
 
@@ -15,60 +17,60 @@ public interface ${table.serviceName}  {
     * @param request
     * @return
     */
-    List<${entity}> get${entity}List(${entity} request);
+    List<${entity}Response> get${entity}List(${entity}Request request);
 
     /**
     * 分页查询列表
     * @param request
     * @return
     */
-    PageResponse<${entity}> get${entity}Page(PageRequest<${entity}> request);
+    PageResponse<${entity}Response> get${entity}Page(PageRequest<${entity}Request> request);
     /**
     * 查询一条数据（查详情）
     * @param request
     * @return
     */
-    ${entity} get${entity}One(${entity} request);
+    ${entity}Response get${entity}One(${entity}Request request);
     /**
     * 新增
     * @param request
     * @return
     */
-    int insert${entity}(${entity} request);
+    int insert${entity}(${entity}Request request);
     /**
     * 批量新增
     * @param request
     * @return
     */
-    int insertBatch${entity}(List<${entity}> request);
+    int insertBatch${entity}(List<${entity}Request> request);
     /**
     * 修改
     * @param request
     * @return
     */
-    int update${entity}(${entity} request);
+    int update${entity}(${entity}Request request);
     /**
     * 通过Ids批量修改
     * @param request
     * @return
     */
-    int updateBatch${entity}Ids(${entity} request);
+    int updateBatch${entity}Ids(${entity}Request request);
     /**
     * 批量修改
     * @param request
     * @return
     */
-    int updateBatch${entity}(List<${entity}> request);
+    int updateBatch${entity}(List<${entity}Request> request);
     /**
     * 逻辑删除
     * @param request
     * @return
     */
-    int delete${entity}(${entity} request);
+    int delete${entity}(${entity}Request request);
     /**
     * 批量逻辑删除
     * @param request
     * @return
     */
-    int deleteBatch${entity}(${entity} request);
+    int deleteBatch${entity}(${entity}Request request);
 }

@@ -1,5 +1,12 @@
 package ${package.ServiceImpl};
 
+import org.apache.commons.lang3.ObjectUtils;
+import com.google.common.collect.Lists;
+import cn.hutool.core.bean.BeanUtil;
+import com.github.pagehelper.PageInfo;
+import org.apache.commons.collections.CollectionUtils;
+import ${package.Controller}.request.${entity}Request;
+import ${package.Controller}.response.${entity}Response;
 import ${package.Service}.${table.serviceName};
 import ${package.Mapper}.${table.mapperName};
 import ${package.Entity}.${entity};
@@ -19,56 +26,64 @@ public class ${table.serviceImplName} implements ${table.serviceName}{
     @Resource
     private ${table.mapperName} ${table.mapperName?uncap_first};
     @Override
-    public List<${entity}> get${entity}List(${entity} request) {
-      return ${table.mapperName?uncap_first}.get${entity}List(request);
+    public List<${entity}Response> get${entity}List(${entity}Request request) {
+      List<${entity}> ${entity?uncap_first}List = ${table.mapperName?uncap_first}.get${entity}List(BeanUtil.copyProperties(request, ${entity}.class));
+      if (CollectionUtils.isEmpty(${entity?uncap_first}List)) {
+        return Lists.newArrayList();
+      }
+      return BeanUtil.copyToList(${entity?uncap_first}List, ${entity}Response.class);
     }
     @Override
-    public PageResponse<${entity}> get${entity}Page(PageRequest<${entity}> request) {
-      int pageNum = request.getPageNum();
-      int pageSize = request.getPageSize();
-      PageHelper.startPage(pageNum, pageSize);
-      List<${entity}> ${entity?uncap_first}List = ${table.mapperName?uncap_first}.get${entity}List(request.getParamData());
-      PageInfo<${entity}> pageInfo = new PageInfo<>(${entity?uncap_first}List);
-      return new PageResponse<>(pageInfo);
+    public PageResponse<${entity}Response> get${entity}Page(PageRequest<${entity}Request> request) {
+      PageHelper.startPage(request.getPageNum(), request.getPageSize());
+      List<${entity}> ${entity?uncap_first}List = ${table.mapperName?uncap_first}.get${entity}List(BeanUtil.copyProperties(request.getParamData(), ${entity}.class));
+      if (CollectionUtils.isEmpty(${entity?uncap_first}List)) {
+         return new PageResponse<>(new PageInfo<>(Lists.newArrayList()));
+      }
+      return new PageResponse<>(BeanUtil.copyProperties(new PageInfo<>(${entity?uncap_first}List),PageInfo.class));
     }
     @Override
-    public ${entity} get${entity}One(${entity} request) {
-      return ${table.mapperName?uncap_first}.get${entity}One(request);
-    }
-
-
-    @Override
-    public int insert${entity}(${entity} request) {
-        return ${table.mapperName?uncap_first}.insert${entity}(request);
-    }
-
-    @Override
-    public int insertBatch${entity}(List<${entity}> request) {
-      return ${table.mapperName?uncap_first}.insertBatch${entity}(request);
+    public ${entity}Response get${entity}One(${entity}Request request) {
+      ${entity}  ${entity?uncap_first}= ${table.mapperName?uncap_first}.get${entity}One(BeanUtil.copyProperties(request, ${entity}.class));
+      if (ObjectUtils.isEmpty(${entity?uncap_first}) ) {
+        return new ${entity}Response();
+      }
+      return BeanUtil.copyProperties(${entity?uncap_first}, ${entity}Response.class);
     }
 
+
     @Override
-    public int update${entity}(${entity} request) {
-      return ${table.mapperName?uncap_first}.update${entity}(request);
+    public int insert${entity}(${entity}Request request) {
+        return ${table.mapperName?uncap_first}.insert${entity}(BeanUtil.copyProperties(request, ${entity}.class));
     }
 
     @Override
-    public int updateBatch${entity}Ids(${entity} request) {
-      return ${table.mapperName?uncap_first}.updateBatch${entity}Ids(request);
+    public int insertBatch${entity}(List<${entity}Request> request) {
+      return ${table.mapperName?uncap_first}.insertBatch${entity}(BeanUtil.copyToList(request, ${entity}.class));
     }
 
     @Override
-    public int updateBatch${entity}(List<${entity}> request) {
-      return ${table.mapperName?uncap_first}.updateBatch${entity}(request);
+    public int update${entity}(${entity}Request request) {
+      return ${table.mapperName?uncap_first}.update${entity}(BeanUtil.copyProperties(request, ${entity}.class));
     }
 
     @Override
-    public int delete${entity}(${entity} request) {
-      return ${table.mapperName?uncap_first}.delete${entity}(request);
+    public int updateBatch${entity}Ids(${entity}Request request) {
+      return ${table.mapperName?uncap_first}.updateBatch${entity}Ids(BeanUtil.copyProperties(request, ${entity}.class));
     }
 
     @Override
-    public int deleteBatch${entity}(${entity} request) {
-      return ${table.mapperName?uncap_first}.deleteBatch${entity}(request);
+    public int updateBatch${entity}(List<${entity}Request> request) {
+      return ${table.mapperName?uncap_first}.updateBatch${entity}(BeanUtil.copyToList(request, ${entity}.class));
+    }
+
+    @Override
+    public int delete${entity}(${entity}Request request) {
+      return ${table.mapperName?uncap_first}.delete${entity}(BeanUtil.copyProperties(request, ${entity}.class));
+    }
+
+    @Override
+    public int deleteBatch${entity}(${entity}Request request) {
+      return ${table.mapperName?uncap_first}.deleteBatch${entity}(BeanUtil.copyProperties(request, ${entity}.class));
     }
 }
